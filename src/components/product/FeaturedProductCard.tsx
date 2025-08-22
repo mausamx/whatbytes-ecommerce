@@ -5,17 +5,20 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Star } from 'lucide-react';
 import { Product } from '@/data/products';
+import { useCart } from '@/context/CartContext';
 
 interface FeaturedProductCardProps {
   product: Product;
 }
 
 const FeaturedProductCard: React.FC<FeaturedProductCardProps> = ({ product }) => {
+  const { addToCart, getItemQuantity } = useCart();
+  const quantity = getItemQuantity(product.id);
+
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    // TODO: Implement cart functionality
-    console.log('Add to cart:', product.title);
+    addToCart(product);
   };
 
   const renderStars = (rating: number) => {
@@ -104,7 +107,7 @@ const FeaturedProductCard: React.FC<FeaturedProductCardProps> = ({ product }) =>
                 : 'bg-gray-300 text-gray-500 cursor-not-allowed'
             }`}
           >
-            Add to Cart
+            {quantity > 0 ? `Add to Cart (${quantity})` : 'Add to Cart'}
           </button>
         </div>
       </div>

@@ -6,16 +6,19 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft, Star, Plus, Minus, ShoppingCart } from 'lucide-react';
 import { getProductById, Product } from '@/data/products';
+import { useCart } from '@/context/CartContext';
 import SimpleHeader from '@/components/layout/SimpleHeader';
 import Footer from '@/components/layout/Footer';
 
 export default function ProductDetailPage() {
   const params = useParams();
+  const { addToCart, getItemQuantity } = useCart();
   const [product, setProduct] = useState<Product | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
 
   const productId = params.id as string;
+  const cartQuantity = getItemQuantity(productId);
 
   useEffect(() => {
     if (productId) {
@@ -33,8 +36,9 @@ export default function ProductDetailPage() {
 
   const handleAddToCart = () => {
     if (product) {
-      // TODO: Implement cart functionality
-      console.log(`Adding ${quantity} of ${product.title} to cart`);
+      for (let i = 0; i < quantity; i++) {
+        addToCart(product);
+      }
     }
   };
 
@@ -202,7 +206,12 @@ export default function ProductDetailPage() {
                 >
                   <ShoppingCart className="h-5 w-5" />
                   <span>
-                    {!product.inStock ? 'Out of Stock' : 'Add to Cart'}
+                    {!product.inStock 
+                      ? 'Out of Stock' 
+                      : cartQuantity > 0 
+                        ? `Add to Cart (${cartQuantity} in cart)` 
+                        : 'Add to Cart'
+                    }
                   </span>
                 </button>
               </div>

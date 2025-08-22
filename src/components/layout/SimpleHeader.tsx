@@ -3,12 +3,15 @@
 import React from 'react';
 import Link from 'next/link';
 import { ShoppingCart, User } from 'lucide-react';
+import { useCart } from '@/context/CartContext';
 
 interface SimpleHeaderProps {
   title?: string;
 }
 
 const SimpleHeader: React.FC<SimpleHeaderProps> = ({ title = "WhatBytes Store" }) => {
+  const { state: cartState } = useCart();
+
   return (
     <header className="bg-blue-500 text-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -30,9 +33,11 @@ const SimpleHeader: React.FC<SimpleHeaderProps> = ({ title = "WhatBytes Store" }
             {/* Cart Icon with Badge */}
             <Link href="/cart" className="relative p-2 rounded-md hover:bg-blue-600 transition-colors">
               <ShoppingCart className="h-6 w-6" />
-              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
-                0
-              </span>
+              {cartState.itemCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
+                  {cartState.itemCount > 99 ? '99+' : cartState.itemCount}
+                </span>
+              )}
               <span className="sr-only">Cart</span>
             </Link>
 

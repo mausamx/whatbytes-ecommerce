@@ -3,8 +3,10 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Search, ShoppingCart, User } from 'lucide-react';
+import { useCart } from '@/context/CartContext';
 
 const Header: React.FC = () => {
+  const { state: cartState } = useCart();
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,9 +43,11 @@ const Header: React.FC = () => {
             {/* Cart Icon with Badge */}
             <Link href="/cart" className="relative p-2 rounded-md hover:bg-blue-600 transition-colors">
               <ShoppingCart className="h-6 w-6" />
-              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
-                0
-              </span>
+              {cartState.itemCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
+                  {cartState.itemCount > 99 ? '99+' : cartState.itemCount}
+                </span>
+              )}
               <span className="sr-only">Cart</span>
             </Link>
 
