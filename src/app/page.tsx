@@ -48,14 +48,38 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-white">
       <Header />
       <main className="flex-1">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex flex-col lg:flex-row gap-8">
-            {/* Sidebar */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
+          {/* Mobile Filter Toggle - Always visible on mobile */}
+          <div className="lg:hidden mb-4">
+            <button
+              onClick={toggleFilters}
+              className="w-full px-4 py-3 bg-[#12005b] text-white rounded-lg hover:bg-[#1c00a7] transition-colors duration-200 flex items-center justify-center gap-2 text-base font-medium shadow-md"
+            >
+              {showFilters ? (
+                <>
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                  Hide Filters
+                </>
+              ) : (
+                <>
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.207A1 1 0 013 6.5V4z" />
+                  </svg>
+                  Show Filters
+                </>
+              )}
+            </button>
+          </div>
+
+          <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-8">
+            {/* Sidebar - Responsive behavior */}
             {showFilters && (
-              <div className="lg:w-1/4">
+              <div className="w-full lg:w-1/4 order-2 lg:order-1">
                 <Sidebar
                   selectedCategory={selectedCategory}
                   minPrice={minPrice}
@@ -67,35 +91,44 @@ export default function Home() {
               </div>
             )}
 
-            {/* Product Grid */}
-            <div className={`${showFilters ? 'lg:w-3/4' : 'lg:w-full'}`}>
-              <div className="mb-6">
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+            {/* Product Grid - Responsive behavior */}
+            <div className={`${showFilters ? 'w-full lg:w-3/4' : 'w-full'} order-1 lg:order-2`}>
+              <div className="mb-4 sm:mb-6">
+                {/* Desktop Filter Toggle - Hidden on mobile */}
+                <div className="hidden lg:flex justify-between items-center mb-6">
                   <h1 className="text-4xl font-bold" style={{ color: '#12005b' }}>
                     Product Listing
                   </h1>
                   <button
                     onClick={toggleFilters}
-                    className="px-4 py-2 bg-[#12005b] text-white rounded-md hover:bg-[#1c00a7] transition-colors duration-200 flex items-center gap-2 text-sm sm:text-base"
+                    className="px-4 py-2 bg-[#12005b] text-white rounded-md hover:bg-[#1c00a7] transition-colors duration-200 flex items-center gap-2 text-sm"
                   >
                     {showFilters ? (
                       <>
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                         </svg>
-                        <span className="hidden sm:inline">Hide Filters</span>
-                        <span className="sm:hidden">Hide</span>
+                        Hide Filters
                       </>
                     ) : (
                       <>
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.207A1 1 0 013 6.5V4z" />
                         </svg>
-                        <span className="hidden sm:inline">Show Filters</span>
-                        <span className="sm:hidden">Show</span>
+                        Show Filters
                       </>
                     )}
                   </button>
+                </div>
+
+                {/* Mobile Title and Product Count */}
+                <div className="lg:hidden mb-4">
+                  <h1 className="text-2xl sm:text-3xl font-bold mb-2" style={{ color: '#12005b' }}>
+                    Product Listing
+                  </h1>
+                  <h2 className="text-lg font-semibold text-gray-700">
+                    {filteredProducts.length} Products
+                  </h2>
                 </div>
                 
                 {/* Filter Status Indicator */}
@@ -128,7 +161,9 @@ export default function Home() {
                     </div>
                   </div>
                 )}
-                <div className="flex justify-between items-center">
+
+                {/* Desktop Product Count and Sort */}
+                <div className="hidden lg:flex justify-between items-center">
                   <h2 className="text-xl font-semibold">
                     Products ({filteredProducts.length})
                   </h2>
@@ -136,6 +171,20 @@ export default function Home() {
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
                     className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1c00a7] focus:border-[#1c00a7]"
+                  >
+                    <option value="name">Sort by Name</option>
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                    <option value="rating">Highest Rated</option>
+                  </select>
+                </div>
+
+                {/* Mobile Sort - Full width on mobile */}
+                <div className="lg:hidden mb-4">
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                    className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1c00a7] focus:border-[#1c00a7] text-base"
                   >
                     <option value="name">Sort by Name</option>
                     <option value="price-asc">Price: Low to High</option>
