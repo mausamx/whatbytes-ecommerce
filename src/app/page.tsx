@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Sidebar from '@/components/layout/Sidebar';
@@ -12,7 +12,23 @@ export default function Home() {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
   const [sortBy, setSortBy] = useState('name');
-  const [showFilters, setShowFilters] = useState(true);
+  const [showFilters, setShowFilters] = useState(false); // Hidden by default on mobile
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Check if we're on mobile on component mount and window resize
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkIfMobile();
+    window.addEventListener('resize', checkIfMobile);
+    
+    return () => window.removeEventListener('resize', checkIfMobile);
+  }, []);
+
+  // Show filters by default on tablet and desktop, controlled by state on mobile
+  const shouldShowFilters = isMobile ? showFilters : true;
   
   const filteredProducts = useMemo(() => {
     let filtered = products;
@@ -77,7 +93,7 @@ export default function Home() {
           </div>
 
           {/* Mobile Filters - Show right below the toggle button */}
-          {showFilters && (
+          {shouldShowFilters && (
             <div className="lg:hidden mb-6">
               <Sidebar
                 selectedCategory={selectedCategory}
@@ -92,7 +108,7 @@ export default function Home() {
 
           <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-8">
             {/* Desktop Sidebar - Hidden on mobile */}
-            {showFilters && (
+            {shouldShowFilters && (
               <div className="hidden lg:block lg:w-1/4">
                 <Sidebar
                   selectedCategory={selectedCategory}
@@ -106,7 +122,7 @@ export default function Home() {
             )}
 
             {/* Product Grid - Full width on mobile, responsive on larger screens */}
-            <div className={`${showFilters ? 'w-full lg:w-3/4' : 'w-full'}`}>
+            <div className={`${shouldShowFilters ? 'w-full lg:w-3/4' : 'w-full'}`}>
               <div className="mb-4 sm:mb-6">
                 {/* Desktop Filter Toggle - Hidden on mobile */}
                 <div className="hidden lg:flex justify-between items-center mb-6">
