@@ -18,7 +18,7 @@ export default function Home() {
   // Check if we're on mobile on component mount and window resize
   useEffect(() => {
     const checkIfMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < 1024); // Changed to 1024px (lg breakpoint)
     };
     
     checkIfMobile();
@@ -27,7 +27,7 @@ export default function Home() {
     return () => window.removeEventListener('resize', checkIfMobile);
   }, []);
 
-  // Show filters by default on tablet and desktop, controlled by state on mobile
+  // Show filters by default only on desktop (≥ 1024px), controlled by state on mobile/tablet
   const shouldShowFilters = isMobile ? showFilters : true;
   
   const filteredProducts = useMemo(() => {
@@ -68,7 +68,7 @@ export default function Home() {
       <Header />
       <main className="flex-1">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
-          {/* Mobile Filter Toggle - Always visible on mobile */}
+          {/* Mobile Filter Toggle - Always visible on mobile/tablet */}
           <div className="lg:hidden mb-4">
             <button
               onClick={toggleFilters}
@@ -124,31 +124,14 @@ export default function Home() {
             {/* Product Grid - Full width on mobile, responsive on larger screens */}
             <div className={`${shouldShowFilters ? 'w-full lg:w-3/4' : 'w-full'}`}>
               <div className="mb-4 sm:mb-6">
-                {/* Desktop Filter Toggle - Hidden on mobile */}
+                {/* Desktop Title and Product Count - No toggle button */}
                 <div className="hidden lg:flex justify-between items-center mb-6">
                   <h1 className="text-4xl font-bold" style={{ color: '#12005b' }}>
                     Product Listing
                   </h1>
-                  <button
-                    onClick={toggleFilters}
-                    className="px-4 py-2 bg-[#12005b] text-white rounded-md hover:bg-[#1c00a7] transition-colors duration-200 flex items-center gap-2 text-sm"
-                  >
-                    {showFilters ? (
-                      <>
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                        Hide Filters
-                      </>
-                    ) : (
-                      <>
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.207A1 1 0 013 6.5V4z" />
-                        </svg>
-                        Show Filters
-                      </>
-                    )}
-                  </button>
+                  <h2 className="text-xl font-semibold">
+                    Products ({filteredProducts.length})
+                  </h2>
                 </div>
 
                 {/* Mobile Title and Product Count */}
