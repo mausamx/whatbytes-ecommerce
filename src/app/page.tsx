@@ -76,10 +76,24 @@ export default function Home() {
             </button>
           </div>
 
+          {/* Mobile Filters - Show right below the toggle button */}
+          {showFilters && (
+            <div className="lg:hidden mb-6">
+              <Sidebar
+                selectedCategory={selectedCategory}
+                minPrice={minPrice}
+                maxPrice={maxPrice}
+                onCategoryChange={handleCategoryChange}
+                onPriceChange={handlePriceChange}
+                onClearFilters={handleClearFilters}
+              />
+            </div>
+          )}
+
           <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-8">
-            {/* Sidebar - Responsive behavior */}
+            {/* Desktop Sidebar - Hidden on mobile */}
             {showFilters && (
-              <div className="w-full lg:w-1/4 order-2 lg:order-1">
+              <div className="hidden lg:block lg:w-1/4">
                 <Sidebar
                   selectedCategory={selectedCategory}
                   minPrice={minPrice}
@@ -91,8 +105,8 @@ export default function Home() {
               </div>
             )}
 
-            {/* Product Grid - Responsive behavior */}
-            <div className={`${showFilters ? 'w-full lg:w-3/4' : 'w-full'} order-1 lg:order-2`}>
+            {/* Product Grid - Full width on mobile, responsive on larger screens */}
+            <div className={`${showFilters ? 'w-full lg:w-3/4' : 'w-full'}`}>
               <div className="mb-4 sm:mb-6">
                 {/* Desktop Filter Toggle - Hidden on mobile */}
                 <div className="hidden lg:flex justify-between items-center mb-6">
