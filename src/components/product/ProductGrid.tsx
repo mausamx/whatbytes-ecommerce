@@ -42,17 +42,10 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, sortBy }) => {
     <div className="space-y-6">
       {/* Regular Product Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {sortedProducts.slice(0, -1).map((product) => (
+        {sortedProducts.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
-      
-      {/* Featured Product - Last product in horizontal layout */}
-      {sortedProducts.length > 0 && (
-        <div className="mt-8">
-          <FeaturedProductCard product={sortedProducts[sortedProducts.length - 1]} />
-        </div>
-      )}
     </div>
   );
 };

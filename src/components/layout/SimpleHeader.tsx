@@ -13,7 +13,7 @@ const SimpleHeader: React.FC<SimpleHeaderProps> = ({ title = "WhatBytes Store" }
   const { state: cartState } = useCart();
 
   return (
-    <header className="bg-blue-500 text-white shadow-lg">
+    <header className="text-white shadow-lg" style={{ backgroundColor: '#1c00a7' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -31,7 +31,7 @@ const SimpleHeader: React.FC<SimpleHeaderProps> = ({ title = "WhatBytes Store" }
           {/* Cart and Profile */}
           <div className="flex items-center space-x-4">
             {/* Cart Icon with Badge */}
-            <Link href="/cart" className="relative p-2 rounded-md hover:bg-blue-600 transition-colors">
+            <Link href="/cart" className="relative p-2 rounded-md hover:bg-gray-600 transition-colors">
               <ShoppingCart className="h-6 w-6" />
               {cartState.itemCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
@@ -42,7 +42,7 @@ const SimpleHeader: React.FC<SimpleHeaderProps> = ({ title = "WhatBytes Store" }
             </Link>
 
             {/* Profile/Avatar */}
-            <button className="p-2 rounded-md hover:bg-blue-600 transition-colors">
+            <button className="p-2 rounded-md hover:bg-gray-600 transition-colors">
               <User className="h-6 w-6" />
               <span className="sr-only">Profile</span>
             </button>

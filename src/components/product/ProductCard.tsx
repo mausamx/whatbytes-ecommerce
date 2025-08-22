@@ -28,7 +28,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
     for (let i = 0; i < fullStars; i++) {
       stars.push(
-        <Star key={i} className="h-4 w-4 fill-blue-500 text-blue-500" />
+        <Star key={i} className="h-4 w-4" style={{ fill: '#12005b', color: '#12005b' }} />
       );
     }
 
@@ -37,7 +37,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <div key="half" className="relative">
           <Star className="h-4 w-4 text-gray-300" />
           <div className="absolute inset-0 overflow-hidden w-1/2">
-            <Star className="h-4 w-4 fill-blue-500 text-blue-500" />
+            <Star className="h-4 w-4" style={{ fill: '#12005b', color: '#12005b' }} />
           </div>
         </div>
       );
@@ -74,7 +74,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
         {/* Product Info */}
         <div className="p-4">
-          <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
+          <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-gray-700 transition-colors">
             {product.title}
           </h3>
           
@@ -97,9 +97,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             disabled={!product.inStock}
             className={`w-full py-2 px-4 rounded-md font-medium transition-colors ${
               product.inStock
-                ? 'bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2'
+                ? 'text-white focus:outline-none focus:ring-2 focus:ring-offset-2'
                 : 'bg-gray-300 text-gray-500 cursor-not-allowed'
             }`}
+            style={product.inStock ? { backgroundColor: '#12005b' } : {}}
           >
             {quantity > 0 ? `Add to Cart (${quantity})` : 'Add to Cart'}
           </button>

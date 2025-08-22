@@ -23,7 +23,8 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
               name="category"
               checked={selectedCategory === category}
               onChange={() => onCategoryChange(category)}
-              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2"
+              className="w-4 h-4 bg-gray-100 border-gray-300 focus:ring-2"
+              style={{ color: '#12005b' }}
             />
             <span className="text-sm text-white">{category}</span>
           </label>

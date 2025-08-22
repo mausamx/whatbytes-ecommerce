@@ -49,7 +49,7 @@ export default function ProductDetailPage() {
 
     for (let i = 0; i < fullStars; i++) {
       stars.push(
-        <Star key={i} className="h-5 w-5 fill-blue-500 text-blue-500" />
+        <Star key={i} className="h-5 w-5" style={{ fill: '#12005b', color: '#12005b' }} />
       );
     }
 
@@ -58,7 +58,7 @@ export default function ProductDetailPage() {
         <div key="half" className="relative">
           <Star className="h-5 w-5 text-gray-300" />
           <div className="absolute inset-0 overflow-hidden w-1/2">
-            <Star className="h-5 w-5 fill-blue-500 text-blue-500" />
+            <Star className="h-5 w-5" style={{ fill: '#12005b', color: '#12005b' }} />
           </div>
         </div>
       );
@@ -95,10 +95,11 @@ export default function ProductDetailPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
             <h1 className="text-2xl font-bold text-gray-900 mb-4">Product Not Found</h1>
-            <p className="text-gray-600 mb-8">The product you're looking for doesn't exist.</p>
+            <p className="text-gray-600 mb-8">The product you&apos;re looking for doesn&apos;t exist.</p>
             <Link
               href="/"
-              className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+              className="inline-flex items-center px-4 py-2 text-white rounded-md transition-colors"
+              style={{ backgroundColor: '#12005b' }}
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Home
@@ -119,7 +120,8 @@ export default function ProductDetailPage() {
         <div className="mb-6">
           <Link
             href="/"
-            className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium"
+            className="inline-flex items-center font-medium"
+            style={{ color: '#12005b' }}
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Products
@@ -144,7 +146,7 @@ export default function ProductDetailPage() {
             <div className="space-y-6">
               <div>
                 <h1 className="text-3xl font-bold text-gray-900 mb-2">{product.title}</h1>
-                <p className="text-lg text-blue-600 font-semibold">${product.price}</p>
+                <p className="text-lg font-semibold" style={{ color: '#12005b' }}>${product.price}</p>
               </div>
 
               {/* Rating */}
@@ -159,7 +161,7 @@ export default function ProductDetailPage() {
 
               {/* Category */}
               <div>
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium text-white" style={{ backgroundColor: '#12005b' }}>
                   {product.category}
                 </span>
               </div>
@@ -200,9 +202,10 @@ export default function ProductDetailPage() {
                   disabled={!product.inStock}
                   className={`w-full flex items-center justify-center space-x-2 py-3 px-6 rounded-md font-medium transition-colors ${
                     product.inStock
-                      ? 'bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2'
+                      ? 'text-white focus:outline-none focus:ring-2 focus:ring-offset-2'
                       : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   }`}
+                  style={product.inStock ? { backgroundColor: '#12005b' } : {}}
                 >
                   <ShoppingCart className="h-5 w-5" />
                   <span>
@@ -225,8 +228,7 @@ export default function ProductDetailPage() {
                 <div className="flex justify-between">
                   <span className="text-gray-600">In Stock:</span>
                   <span className={`font-medium ${product.inStock ? 'text-green-600' : 'text-red-600'}`}>
-                    {product.inStock ? 'Yes' : 'No'}
-                  </span>
+                    {product.inStock ? 'Yes' : 'No'}</span>
                 </div>
               </div>
             </div>

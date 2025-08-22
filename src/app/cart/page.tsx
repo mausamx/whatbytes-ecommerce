@@ -42,7 +42,8 @@ export default function CartPage() {
             <p className="text-gray-600 mb-8">Add some products to get started!</p>
             <Link
               href="/"
-              className="inline-flex items-center px-6 py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors font-medium"
+              className="inline-flex items-center px-6 py-3 text-white rounded-md transition-colors font-medium"
+              style={{ backgroundColor: '#12005b' }}
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Continue Shopping
@@ -64,7 +65,8 @@ export default function CartPage() {
         <div className="mb-6">
           <Link
             href="/"
-            className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium"
+            className="inline-flex items-center font-medium"
+            style={{ color: '#12005b' }}
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Continue Shopping
@@ -98,7 +100,7 @@ export default function CartPage() {
                     <div className="flex-1 min-w-0">
                       <Link 
                         href={`/product/${item.product.id}`}
-                        className="text-lg font-medium text-gray-900 hover:text-blue-600 transition-colors"
+                        className="text-lg font-medium text-gray-900 hover:text-gray-700 transition-colors"
                       >
                         {item.product.title}
                       </Link>
@@ -182,8 +184,9 @@ export default function CartPage() {
                 className={`w-full py-3 px-4 rounded-md font-medium transition-colors ${
                   isLoading || state.items.length === 0
                     ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                    : 'bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2'
+                    : 'text-white focus:outline-none focus:ring-2 focus:ring-offset-2'
                 }`}
+                style={!isLoading && state.items.length > 0 ? { backgroundColor: '#12005b' } : {}}
               >
                 {isLoading ? 'Processing...' : 'Proceed to Checkout'}
               </button>

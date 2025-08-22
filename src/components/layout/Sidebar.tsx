@@ -24,12 +24,12 @@ const Sidebar: React.FC<SidebarProps> = ({
   onClearFilters
 }) => {
   return (
-    <aside className={`bg-blue-500 p-6 rounded-lg shadow-sm ${className}`}>
+    <aside className={`p-6 rounded-lg shadow-sm ${className}`} style={{ backgroundColor: '#1c00a7' }}>
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-xl font-bold text-white">Filters</h2>
         <button
           onClick={onClearFilters}
-          className="text-sm text-blue-200 hover:text-white font-medium"
+          className="text-sm text-gray-300 hover:text-white font-medium"
         >
           Clear All
         </button>
